@@ -1,6 +1,7 @@
 import { Product } from './../../models/product';
 import { Basket } from './../../models/basket';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -9,7 +10,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
   basket: Basket[] = []
-  total:number = 0
   @Output() event: EventEmitter<any> = new EventEmitter()
   products: Product[] = [
     {
@@ -61,19 +61,27 @@ export class ProductComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(private toastrService:ToastrService) { }
 
   ngOnInit(): void {
   }
 
   addToBasket(product: Product) {
+    let isThere = false
     let basketModel:Basket = new Basket()
     basketModel.product = product
-    basketModel.quantity = 1
-    this.basket.push(basketModel)
-    this.total += (basketModel.quantity * product.price) 
-    console.log(this.total)
-    this.event.emit({data: this.basket, total: this.total})
+    basketModel.quantity = parseInt((<HTMLInputElement>document.getElementById("quantity-"+product.name)).value)
+    this.basket.forEach(element => {
+      if(element.product.name == product.name){
+        isThere = true
+        element.quantity += basketModel.quantity
+      }
+    });
+    if(!isThere){
+      this.basket.push(basketModel) 
+      this.toastrService.success(product.name + " başarıyla eklendi.")
+    }
+    this.event.emit({data: this.basket})
   }
 
 }

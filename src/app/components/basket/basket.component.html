@@ -1,33 +1,65 @@
 <h3 class="text-center text-success">Sepetiniz</h3>
-<hr>
-<table class="table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Ürün Adı</th>
-            <th>Adet</th>
-            <th>Tutar</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let productInBasket of basket let i = index">
-            <th>{{i+1}}</th>
-            <th>{{productInBasket.product.name}}</th>
-            <th>{{productInBasket.quantity}}</th>
-            <th>{{productInBasket.product.price * productInBasket.quantity}}</th>
-            <th></th>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th></th>
-            <th></th>
-            <th>Toplam: {{total}} TL</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </tfoot>
+<hr />
+<table class="table dfff">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Ürün Adı</th>
+      <th>Adet</th>
+      <th>Tutar</th>
+      <th>İşlemler</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let productInBasket of basket; let i = index">
+      <th>{{ i + 1 }}</th>
+      <th>{{ productInBasket.product.name }}</th>
+      <th>
+        <input
+          type="number"
+          min="1"
+          class="basket-quantity"
+          [value]="productInBasket.quantity"
+          id="basket-quantity-{{ productInBasket.product.name }}"
+          (click)="changeQuantity(productInBasket)"
+          (keyup)="changeQuantity(productInBasket)"
+        />
+      </th>
+      <th>
+        {{
+          productInBasket.product.price * productInBasket.quantity
+            | currency: "TRY":"symbol-narrow":"1.2-2"
+        }}
+      </th>
+      <th>
+        <button
+          class="btn btn-sm btn-danger"
+          (click)="deleteProductInBasket(productInBasket)"
+        >
+          Sil
+        </button>
+      </th>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th
+        [innerText]="basketTotal() | currency: 'TRY':'symbol-narrow':'1.2-2'"
+      ></th>
+    </tr>
+  </tfoot>
 </table>
 
-<button class="btn btn-lg btn-success" style="display: flex; margin:0 auto;">Ödeme Yap</button>
+<button
+  class="btn btn-lg btn-success"
+  style="display: flex; margin: 0 auto"
+  data-bs-toggle="modal"
+  data-bs-target="#payment-modal"
+>
+  Ödeme Yap
+</button>
+
+<app-payment [total]="total" (myEvent)="payment($event)"></app-payment>
+
