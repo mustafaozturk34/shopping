@@ -1,1 +1,15 @@
-<p>product works!</p>
+<div class="row">
+  <div class="col-lg-4 product mt-4" *ngFor="let product of products">
+    <img
+      src="{{product.imageUrl}}"
+      alt=""
+      style="width: 200px; height: 200px;"
+    />
+    <h3>{{product.name}}</h3>
+    <h4 class="text-danger">{{product.price}} TL</h4>
+    <input type="number" class="product-input" value="1">
+    <button class="btn btn-primary" (click)="addToBasket(product)">Sepete Ekle</button>
+  </div>
+  
+  
+</div>
