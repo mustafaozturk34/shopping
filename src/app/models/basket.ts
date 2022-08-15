@@ -1,6 +1,6 @@
-import { Product } from "./product";
+import { ProductModel } from "./product";
 
-export class Basket {
-    product: Product
-    quantity:number
+export class BasketModel{
+  product:ProductModel;
+  quantity:number;
 }

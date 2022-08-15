@@ -1,71 +1,37 @@
-<div
-  class="modal fade"
-  id="payment-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ödeme Ekranı</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label"
-            >Kart Sahibi Ad ve Soyad</label
-          >
-          <input
-            type="email"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Mustafa Öztürk"
-          />
+          <label for="exampleFormControlInput1" class="form-label">Kart Sahibi Ad ve Soyad</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
         </div>
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label"
-            >Kart Numarası</label
-          >
-          <input
-            type="email"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="1234-5678-9012-3456"
-          />
+          <label for="exampleFormControlInput1" class="form-label">Kart Numarası</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Son Kullanma Tarihi</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">CCV</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Toplam Ödenecek Tutar</label>
+          <h3 class="text-danger">{{ total | currency: 'TRY': 'symbol-narrow': '1.2-2' }}</h3>
         </div>
       </div>
-      <div class="mb-3 card-cvv">
-        <div class="exp-date">
-            <label for="expirationDate" class="form-label">S.K.T: </label>
-            <input type="number" max="12" min="1" id="expirationDate-month" value="8">
-            <h5>/</h5>
-            <input type="number" max="2030" min="2022" id="expirationDate-year" value="2022">
-        </div>
-        <div class="cvv-side">
-            <label for="cvv" class="form-label">CVV:</label>
-            <input type="number" min="100" max="999" id="cvv">
-        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="paymentModalCloseBtn">Kapat</button>
+        <button type="button" class="btn btn-success" (click)="payment()">Ödeme Yap</button>
       </div>
-      <div class="mb-3">
-        <h4 class="text-center">Toplam Ödenecek Tutar</h4>
-        <h3 class="text-center text-danger">{{total | currency: 'TRY':'symbol-narrow':'1.2-2'}}</h3>
-      </div>
-      
-    
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal-close-button">
-        Kapat
-      </button>
-      <button type="button" class="btn btn-success" (click)="payment()">Ödeme Yap</button>
     </div>
   </div>
 </div>

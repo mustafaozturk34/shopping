@@ -1,49 +1,38 @@
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Basket } from './../../models/basket';
-import { Component, OnInit, Input } from '@angular/core';
+import { BasketModel } from 'src/app/models/basket';
+import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
   styleUrls: ['./basket.component.scss']
 })
-export class BasketComponent implements OnInit {
-  @Input() basket:Basket[]
-  total:number
-  constructor(private toastrService:ToastrService) { }
+export class BasketComponent implements OnInit, AfterContentChecked {
+
+  baskets: BasketModel[] = [];
+  total: number = 0;
+
+  constructor(
+    private toastrService: ToastrService,
+    private basketService: BasketService
+  ) { }
 
   ngOnInit(): void {
-  }
-  deleteProductInBasket(productInBasket:Basket){
-    let index = this.basket.indexOf(productInBasket)
-    this.basket.splice(index,1)
-    this.toastrService.info(productInBasket.product.name + " başarıyla silindi.")
-    // if(this.basket.length == 0)
-    // this.total = 0
+    this.baskets = this.basketService.baskets;
   }
 
-  basketTotal(){
-    this.total = 0
-    this.basket.forEach(element => {
-      this.total += element.product.price * element.quantity
-    })
-    return this.total
+  ngAfterContentChecked(): void {
+    this.total = this.basketService.total
   }
 
-  changeQuantity(productInBasket:Basket){
-    let quantity = parseInt((<HTMLInputElement>document.getElementById("basket-quantity-"+productInBasket.product.name)).value)
-    this.basket.forEach(element => {
-      if(productInBasket.product.name == element.product.name){
-        element.quantity = quantity
-      }
-    });
+  deleteProduct(basket: BasketModel) {
+    this.basketService.deleteProduct(basket);
   }
 
-  payment(event:any) {
-    if(this.total == event.total){
-      this.basket.splice(0, this.basket.length)
-      this.toastrService.info("Sipariş başarıyla verildi.")
-    }
+  changeData(basket: BasketModel, quantity:any) {
+    this.basketService.changeData(basket, quantity.value);
   }
+
 
 }

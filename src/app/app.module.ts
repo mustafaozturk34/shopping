@@ -3,30 +3,33 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
-import { BasketComponent } from './components/basket/basket.component';
+import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { PaymentComponent } from './components/payment/payment.component';
 import { ProductComponent } from './components/product/product.component';
+import { BasketComponent } from './components/basket/basket.component';
+import { PaymentComponent } from './components/payment/payment.component';
 import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OrderComponent } from './components/order/order.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    BasketComponent,
     NavbarComponent,
+    ProductComponent,
+    BasketComponent,
     PaymentComponent,
-    ProductComponent
+    OrderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      closeButton: true,
-      progressBar: true
+      closeButton:true,
+      progressBar:true,
+      positionClass:"toast-bottom-right"
     })
   ],
   providers: [],
